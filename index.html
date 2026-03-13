@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mise en relation · Les Cœurs Solitaires</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--T:#00BCD4;--TD:#0097b2;--TDP:#004d66;--V:#9B59B6;--F:#E91E8C;--FD:#c0156e;--N:#1A1A1A;--CR:#F7F2EC;--CRD:#EDE5D8;--G:#888;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;background:var(--CR);color:var(--N);overflow-x:hidden;}
+#garde{position:fixed;inset:0;z-index:1000;background:linear-gradient(160deg,var(--TDP),var(--TD),var(--T));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px;transition:opacity .9s,transform .9s;}
+#garde.out{opacity:0;transform:scale(1.06);pointer-events:none;}
+.g-orb1{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(233,30,140,.2),transparent 70%);top:-80px;right:-60px;animation:orb 9s ease-in-out infinite;}
+.g-orb2{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(155,89,182,.2),transparent 70%);bottom:-60px;left:-60px;animation:orb 12s ease-in-out infinite reverse;}
+@keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(22px,16px)}}
+.g-inner{position:relative;max-width:360px;}
+.g-coeur{font-size:5rem;animation:hb 2s ease-in-out infinite;filter:drop-shadow(0 0 40px rgba(255,255,255,.5));margin-bottom:20px;display:block;}
+@keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.15)}28%{transform:scale(1)}42%{transform:scale(1.08)}56%{transform:scale(1)}}
+.g-eye{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px;}
+.g-titre{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:white;line-height:1.15;margin-bottom:14px;}
+.g-titre em{font-style:italic;}
+.g-sous{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:rgba(255,255,255,.8);margin-bottom:36px;}
+.g-btn{display:inline-flex;align-items:center;gap:10px;background:white;color:var(--TDP);border:none;border-radius:50px;padding:16px 36px;font-family:'Jost',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;box-shadow:0 8px 40px rgba(0,0,0,.25);animation:pulse 3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 8px 40px rgba(0,0,0,.25)}50%{box-shadow:0 8px 60px rgba(0,188,212,.4)}}
+#contenu{opacity:0;transform:translateY(20px);transition:opacity .8s,transform .8s;}
+#contenu.visible{opacity:1;transform:translateY(0);}
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,242,236,.93);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,188,212,.12);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--N);display:flex;align-items:center;gap:6px;}
+.nav-brand .h{color:var(--F);}
+.nav-brand em{font-style:italic;color:var(--V);}
+.nav-cta{background:#25D366;color:white;border:none;border-radius:50px;padding:8px 20px;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:500;text-decoration:none;}
+.hero{background:linear-gradient(160deg,var(--TDP),var(--TD),var(--T));padding:56px 24px 48px;text-align:center;}
+.h-eye{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:14px;}
+.h-titre{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:600;color:white;line-height:1.15;margin-bottom:14px;max-width:400px;margin-left:auto;margin-right:auto;}
+.h-titre em{font-style:italic;}
+.h-sous{font-size:.86rem;color:rgba(255,255,255,.65);line-height:1.7;max-width:330px;margin:0 auto 28px;}
+.h-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:50px;padding:8px 20px;font-size:.74rem;color:rgba(255,255,255,.85);}
+.sec{padding:48px 24px;}.sec-white{background:white;}.sec-cr{background:var(--CR);}
+.eye{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--T);margin-bottom:10px;text-align:center;}
+.tit{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:var(--N);text-align:center;margin-bottom:8px;}
+.tit em{font-style:italic;color:var(--V);}
+.deco{width:40px;height:2px;background:linear-gradient(90deg,var(--T),var(--V));margin:12px auto 22px;}
+.etapes{max-width:440px;margin:0 auto;}
+.etape{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(0,188,212,.1);align-items:flex-start;}
+.etape:last-child{border-bottom:none;}
+.et-num{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--T),var(--V));color:white;font-size:.88rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.et-tit{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--N);margin-bottom:3px;}
+.et-txt{font-size:.76rem;color:var(--G);line-height:1.55;}
+.gar-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:440px;margin:20px auto 0;}
+.gar{background:var(--CR);border-radius:12px;padding:16px;text-align:center;border-top:3px solid var(--T);}
+.gar-i{font-size:1.4rem;margin-bottom:6px;}
+.gar-t{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:var(--N);margin-bottom:3px;}
+.gar-x{font-size:.7rem;color:var(--G);line-height:1.4;}
+.eng-section{background:var(--N);padding:52px 24px;}
+.eng-eye{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--T);margin-bottom:10px;text-align:center;}
+.eng-tit{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:white;text-align:center;margin-bottom:8px;}
+.eng-tit em{font-style:italic;color:var(--T);}
+.eng-sous{font-size:.8rem;color:rgba(255,255,255,.5);text-align:center;max-width:360px;margin:0 auto 24px;line-height:1.6;}
+.eng-deco{width:40px;height:2px;background:linear-gradient(90deg,var(--T),var(--V));margin:12px auto 22px;}
+.eng-list{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+.eng-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;}
+.eng-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;gap:12px;}
+.eng-header-left{display:flex;align-items:center;gap:12px;}
+.eng-icon{font-size:1.2rem;width:32px;text-align:center;}
+.eng-nom{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:white;}
+.eng-arrow{color:rgba(255,255,255,.4);font-size:.8rem;transition:transform .3s;flex-shrink:0;}
+.eng-item.open .eng-arrow{transform:rotate(90deg);}
+.eng-body{display:none;padding:0 18px 18px;font-size:.76rem;color:rgba(255,255,255,.6);line-height:1.75;}
+.eng-item.open .eng-body{display:block;}
+.eng-body strong{color:rgba(255,255,255,.85);}
+.eng-body ul{padding-left:16px;margin:6px 0;}
+.eng-body ul li{margin-bottom:4px;}
+.eng-check{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px;background:rgba(0,188,212,.1);border:1px solid rgba(0,188,212,.25);border-radius:10px;cursor:pointer;}
+.eng-check input[type=checkbox]{width:18px;height:18px;accent-color:var(--T);cursor:pointer;flex-shrink:0;}
+.eng-check-label{font-size:.75rem;color:rgba(255,255,255,.75);line-height:1.4;}
+.eng-cta{max-width:440px;margin:20px auto 0;}
+.eng-cta-btn{width:100%;background:linear-gradient(135deg,var(--T),var(--TD));color:white;border:none;border-radius:50px;padding:15px;font-family:'Jost',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;opacity:.4;pointer-events:none;}
+.eng-cta-btn.ready{opacity:1;pointer-events:all;}
+.eng-err{display:none;color:#ff8a80;font-size:.75rem;text-align:center;margin-top:10px;}
+.form-bg{background:linear-gradient(160deg,var(--TDP),var(--TD) 60%,var(--T));padding:52px 24px 64px;}
+.form-eye{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;text-align:center;}
+.form-tit{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:white;text-align:center;margin-bottom:6px;}
+.form-tit em{font-style:italic;}
+.form-sous{font-size:.8rem;color:rgba(255,255,255,.55);text-align:center;margin-bottom:28px;line-height:1.6;}
+.steps-bar{display:flex;justify-content:center;gap:6px;margin-bottom:24px;}
+.sdot{height:7px;border-radius:4px;background:rgba(255,255,255,.3);transition:all .3s;width:7px;}
+.sdot.on{background:white;width:22px;}
+.fcard{background:white;border-radius:20px;padding:26px 22px;max-width:440px;margin:0 auto;}
+.fc-tit{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--N);margin-bottom:3px;}
+.fc-sub{font-size:.72rem;color:var(--G);margin-bottom:18px;line-height:1.5;}
+.field{margin-bottom:14px;}
+.field label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--G);display:block;margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;background:var(--CR);border:1.5px solid var(--CRD);border-radius:10px;padding:11px 13px;color:var(--N);font-family:'Jost',sans-serif;font-size:.84rem;outline:none;transition:border .2s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--T);}
+.field textarea{resize:none;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.profil-grid{display:flex;flex-direction:column;gap:8px;}
+.popt{display:flex;align-items:center;gap:12px;background:var(--CR);border:1.5px solid var(--CRD);border-radius:12px;padding:13px;cursor:pointer;transition:all .2s;}
+.popt:hover,.popt.sel{border-color:var(--T);background:#e6f8fb;}
+.popt input{display:none;}
+.popt-ph{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--T),var(--V));display:flex;align-items:center;justify-content:center;color:white;font-size:1.1rem;flex-shrink:0;}
+.popt-nom{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--N);}
+.popt-det{font-size:.68rem;color:var(--G);}
+.acc-list{display:flex;flex-direction:column;gap:8px;margin-bottom:4px;}
+.acc-item{border:1.5px solid var(--CRD);border-radius:12px;overflow:hidden;transition:border .2s;}
+.acc-item.open{border-color:var(--T);}
+.acc-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;background:var(--CR);}
+.acc-item.open .acc-header{background:#e6f8fb;}
+.acc-num{width:28px;height:28px;border-radius:50%;background:var(--CRD);color:var(--G);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.acc-item.open .acc-num{background:var(--T);color:white;}
+.acc-titre{flex:1;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--N);}
+.acc-arrow{color:var(--G);font-size:.8rem;transition:transform .3s;}
+.acc-item.open .acc-arrow{transform:rotate(180deg);color:var(--T);}
+.acc-body{display:none;padding:12px 14px 14px;}
+.acc-item.open .acc-body{display:block;}
+.tab-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:var(--G);background:var(--CR);border-left:3px solid var(--T);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;line-height:1.6;}
+.char-count{font-size:.65rem;color:var(--G);text-align:right;margin-top:4px;}
+.tab-ta{width:100%;background:var(--CR);border:1.5px solid var(--CRD);border-radius:10px;padding:11px 13px;font-family:'Jost',sans-serif;font-size:.82rem;outline:none;resize:none;color:var(--N);}
+.tab-ta:focus{border-color:var(--T);}
+.tags-section{margin-bottom:14px;}
+.tags-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--G);margin-bottom:8px;display:block;}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.tag{background:var(--CR);border:1.5px solid var(--CRD);border-radius:20px;padding:5px 12px;font-size:.72rem;color:var(--N);cursor:pointer;transition:all .2s;user-select:none;}
+.tag.on{background:var(--T);border-color:var(--T);color:white;}
+.tag-add-row{display:flex;gap:6px;}
+.tag-add-row input{flex:1;background:var(--CR);border:1.5px solid var(--CRD);border-radius:20px;padding:6px 12px;font-size:.75rem;outline:none;font-family:'Jost',sans-serif;}
+.tag-add-btn{background:var(--T);color:white;border:none;border-radius:20px;padding:6px 14px;font-size:.72rem;cursor:pointer;}
+.photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.pslot{aspect-ratio:3/4;border-radius:10px;border:2px dashed var(--CRD);background:var(--CR);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;transition:all .2s;}
+.pslot:hover{border-color:var(--T);}
+.pslot.filled{border-color:var(--T);border-style:solid;}
+.pslot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.pslot-num{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--CRD);}
+.pslot-lbl{font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--G);margin-top:4px;}
+.pslot-prev{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+.pslot.filled .pslot-prev{display:block;}
+.pslot.filled .pslot-num,.pslot.filled .pslot-lbl{display:none;}
+.pslot-rm{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.55);color:white;border:none;border-radius:50%;width:20px;height:20px;font-size:.65rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;}
+.pslot.filled .pslot-rm{display:flex;}
+.photos-hint{font-size:.7rem;color:var(--G);background:var(--CR);border-radius:8px;padding:10px 12px;line-height:1.6;margin-bottom:10px;}
+.photos-opts{display:flex;flex-direction:column;gap:8px;}
+.photo-opt{display:flex;align-items:center;gap:10px;background:var(--CR);border:1.5px solid var(--CRD);border-radius:10px;padding:11px 13px;cursor:pointer;font-size:.78rem;color:var(--N);}
+.photo-opt input{accent-color:var(--T);}
+.recap-bl{background:var(--CR);border-radius:10px;padding:12px 14px;margin-bottom:10px;}
+.recap-lbl{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--G);margin-bottom:3px;}
+.recap-val{font-size:.84rem;color:var(--N);font-weight:500;white-space:pre-line;}
+.pay-section{background:var(--N);padding:52px 24px 64px;}
+.pay-eye{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--T);text-align:center;margin-bottom:10px;}
+.pay-tit{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:white;text-align:center;margin-bottom:8px;}
+.pay-tit em{font-style:italic;color:var(--T);}
+.pay-sous{font-size:.8rem;color:rgba(255,255,255,.5);text-align:center;margin:0 auto 28px;line-height:1.6;max-width:360px;}
+.pay-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px;max-width:440px;margin:0 auto 16px;}
+.pay-card-tit{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:white;margin-bottom:14px;text-align:center;}
+.pay-opts{display:flex;flex-direction:column;gap:10px;}
+.pay-opt{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;padding:14px;text-decoration:none;color:white;transition:all .2s;}
+.pay-opt:hover{border-color:var(--T);background:rgba(0,188,212,.1);}
+.pay-opt-ico{font-size:1.5rem;width:36px;text-align:center;flex-shrink:0;}
+.pay-opt-nom{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;color:white;}
+.pay-opt-det{font-size:.68rem;color:rgba(255,255,255,.5);}
+.btn-row{display:flex;gap:10px;margin-top:20px;}
+.btn-next{flex:1;background:linear-gradient(135deg,var(--T),var(--TD));color:white;border:none;border-radius:50px;padding:13px;font-family:'Jost',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;}
+.btn-next:hover{transform:translateY(-2px);}
+.btn-back{background:var(--CR);color:var(--G);border:none;border-radius:50px;padding:13px 18px;font-family:'Jost',sans-serif;font-size:.82rem;cursor:pointer;}
+.ferr{display:none;color:var(--F);font-size:.73rem;text-align:center;margin-top:8px;}
+.footer{background:var(--N);color:rgba(255,255,255,.4);text-align:center;padding:24px;font-size:.67rem;line-height:1.8;}
+.footer a{color:rgba(255,255,255,.35);text-decoration:none;}
+.footer strong{color:rgba(255,255,255,.6);}
+</style>
+</head>
+<body>
+
+<div id="garde">
+  <div class="g-orb1"></div><div class="g-orb2"></div>
+  <div class="g-inner">
+    <span class="g-coeur">💌</span>
+    <div class="g-eye">Les Cœurs Solitaires · Bretagne</div>
+    <div class="g-titre">Un profil vous a<br><em>touché ?</em></div>
+    <div class="g-sous">Faites le premier pas.</div>
+    <button class="g-btn" id="btn-garde">Découvrir comment →</button>
+  </div>
+</div>
+
+<div id="contenu">
+<nav class="nav">
+  <div class="nav-brand"><span class="h">♥</span> Les Cœurs <em>Solitaires</em></div>
+  <a href="https://wa.me/33633054456" target="_blank" class="nav-cta">💬 WhatsApp</a>
+</nav>
+
+<section class="hero">
+  <div class="h-eye">Mise en relation · Les Cœurs Solitaires</div>
+  <h1 class="h-titre">Un profil vous a<br><em>touché ?</em></h1>
+  <p class="h-sous">Je prends contact pour vous, de façon confidentielle et bienveillante.</p>
+  <div class="h-pill">💝 Paiement unique · Sans abonnement · 13 €</div>
+</section>
+
+<section class="sec sec-white">
+  <div class="eye">Le déroulé</div>
+  <h2 class="tit">Comment ça <em>fonctionne ?</em></h2>
+  <div class="deco"></div>
+  <div class="etapes">
+    <div class="etape"><div class="et-num">①</div><div><div class="et-tit">Vous remplissez le formulaire</div><div class="et-txt">Vos informations, le profil qui vous intéresse, votre présentation et votre annonce complète.</div></div></div>
+    <div class="etape"><div class="et-num">②</div><div><div class="et-tit">Je vous contacte sous 48h</div><div class="et-txt">Je reviens vers vous pour confirmer votre demande.</div></div></div>
+    <div class="etape"><div class="et-num">③</div><div><div class="et-tit">Vous réglez 13 € la mise en relation</div><div class="et-txt">Via Yurplan ou PayPal. Paiement sécurisé et immédiat.</div></div></div>
+    <div class="etape"><div class="et-num">④</div><div><div class="et-tit">Si les deux parties sont partantes</div><div class="et-txt">J'organise l'échange des coordonnées avec discrétion et bienveillance.</div></div></div>
+    <div class="etape"><div class="et-num">⑤</div><div><div class="et-tit">La suite vous appartient 🌿</div><div class="et-txt">En toute liberté, à votre rythme, comme vous le souhaitez.</div></div></div>
+  </div>
+</section>
+
+<section class="sec sec-cr">
+  <div class="eye">Mes engagements</div>
+  <h2 class="tit">Ce que vous pouvez <em>attendre</em></h2>
+  <div class="deco"></div>
+  <div class="gar-grid">
+    <div class="gar"><div class="gar-i">🔒</div><div class="gar-t">Confidentiel</div><div class="gar-x">Vos coordonnées ne sont jamais partagées sans votre accord.</div></div>
+    <div class="gar"><div class="gar-i">🤝</div><div class="gar-t">Humain</div><div class="gar-x">Je vous réponds en personne. Pas un robot.</div></div>
+    <div class="gar"><div class="gar-i">🌿</div><div class="gar-t">Bienveillant</div><div class="gar-x">Si cela ne matche pas, vous êtes informé avec douceur.</div></div>
+    <div class="gar"><div class="gar-i">✨</div><div class="gar-t">Sans pression</div><div class="gar-x">Pas d'abonnement. Vous avancez à votre rythme.</div></div>
+  </div>
+</section>
+
+<section class="eng-section" id="sec-eng">
+  <div class="eng-eye">Avant de commencer</div>
+  <h2 class="eng-tit">Nos <em>engagements</em> &amp; conditions</h2>
+  <div class="eng-deco"></div>
+  <p class="eng-sous">Merci de lire et d'accepter chacun des documents ci-dessous pour accéder au formulaire.</p>
+  <div class="eng-list">
+
+    <div class="eng-item" id="eng1">
+      <div class="eng-header" data-target="eng1">
+        <div class="eng-header-left"><span class="eng-icon">🔒</span><span class="eng-nom">Protection des données personnelles (RGPD)</span></div>
+        <span class="eng-arrow">▸</span>
+      </div>
+      <div class="eng-body">
+        <p>Lili Karantez collecte : prénom, nom, âge, ville, email, téléphone (optionnel), description personnelle et photos (optionnelles).</p>
+        <p style="margin-top:8px;"><strong>Données publiées :</strong> Seuls votre pseudo, âge, ville et texte apparaissent. Votre nom, email et téléphone restent strictement confidentiels.</p>
+        <p style="margin-top:8px;"><strong>Durée de conservation :</strong> 2 mois après la mise en relation, puis suppression de toutes vos données.</p>
+        <p style="margin-top:8px;"><strong>Vos droits :</strong> suppression à tout moment. Contact : lilikarantez@gmail.com</p>
+        <div class="eng-check"><input type="checkbox" id="chk1"><label class="eng-check-label" for="chk1">J'ai lu et j'accepte la politique de protection des données personnelles.</label></div>
+      </div>
+    </div>
+
+    <div class="eng-item" id="eng2">
+      <div class="eng-header" data-target="eng2">
+        <div class="eng-header-left"><span class="eng-icon">🤝</span><span class="eng-nom">Charte d'engagement</span></div>
+        <span class="eng-arrow">▸</span>
+      </div>
+      <div class="eng-body">
+        <p>En déposant votre demande, vous vous engagez à :</p>
+        <ul>
+          <li>Fournir des informations sincères et exactes vous concernant.</li>
+          <li>Utiliser des photos récentes et vous représentant réellement.</li>
+          <li>Rédiger une présentation respectueuse et bienveillante.</li>
+          <li>Ne pas usurper l'identité d'une autre personne.</li>
+          <li>Respecter la vie privée des autres membres.</li>
+        </ul>
+        <p style="margin-top:8px;">Lili Karantez se réserve le droit de refuser toute demande ne respectant pas cette charte.</p>
+        <div class="eng-check"><input type="checkbox" id="chk2"><label class="eng-check-label" for="chk2">J'ai lu et j'accepte la charte d'engagement.</label></div>
+      </div>
+    </div>
+
+    <div class="eng-item" id="eng3">
+      <div class="eng-header" data-target="eng3">
+        <div class="eng-header-left"><span class="eng-icon">📸</span><span class="eng-nom">Charte photos</span></div>
+        <span class="eng-arrow">▸</span>
+      </div>
+      <div class="eng-body">
+        <p><strong>Photos acceptées :</strong></p>
+        <ul>
+          <li>Portrait soigné, de face ou de trois-quarts, fond neutre ou naturel.</li>
+          <li>Photo en situation valorisante : activité, voyage, sourire naturel.</li>
+          <li>Bonne qualité, lumière correcte, image nette et récente.</li>
+        </ul>
+        <p style="margin-top:8px;"><strong>Photos refusées :</strong></p>
+        <ul>
+          <li>Photos avec enfants, famille ou groupe de personnes.</li>
+          <li>Photos avec cigarette, alcool ou contexte festif.</li>
+          <li>Tenue négligée : jogging, pyjama, torse nu, décolleté suggestif.</li>
+          <li>Selfie dans des toilettes ou un miroir de salle de bain.</li>
+          <li>Photo floue, sombre, mal cadrée ou datant de plus de 2 ans.</li>
+        </ul>
+        <p style="margin-top:8px;">Vos photos ne sont jamais transmises à des tiers et sont supprimées dans les 2 mois suivant la mise en relation.</p>
+        <div class="eng-check"><input type="checkbox" id="chk3"><label class="eng-check-label" for="chk3">J'ai lu et j'accepte la charte photos.</label></div>
+      </div>
+    </div>
+
+    <div class="eng-item" id="eng4">
+      <div class="eng-header" data-target="eng4">
+        <div class="eng-header-left"><span class="eng-icon">📋</span><span class="eng-nom">Conditions Générales de Vente</span></div>
+        <span class="eng-arrow">▸</span>
+      </div>
+      <div class="eng-body">
+        <p><strong>Prestataire :</strong> Lili Karantez, Les Cœurs Solitaires, Centre des Affaires Lorient La Base, 1 rue Étienne d'Orves, 56100 Lorient. SIRET 40149331700069.</p>
+        <p style="margin-top:8px;"><strong>Prix :</strong> 13 € net (non assujetti à la TVA) par mise en relation.</p>
+        <p style="margin-top:8px;"><strong>Paiement :</strong> via Yurplan ou PayPal, après dépôt du formulaire. Aucun paiement n'est demandé avant validation par Lili.</p>
+        <p style="margin-top:8px;"><strong>Rétractation :</strong> impossible une fois la mise en relation effectuée. Avant mise en relation, vous pouvez annuler sans frais en contactant Lili par email.</p>
+        <p style="margin-top:8px;"><strong>Réclamations :</strong> lilikarantez@gmail.com — réponse sous 48h.</p>
+        <div class="eng-check"><input type="checkbox" id="chk4"><label class="eng-check-label" for="chk4">J'ai lu et j'accepte les Conditions Générales de Vente.</label></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="eng-cta">
+    <button class="eng-cta-btn" id="eng-cta-btn">Continuer →</button>
+    <div class="eng-err" id="eng-err">Merci d'accepter les quatre documents pour continuer.</div>
+  </div>
+</section>
+
+<section class="form-bg" id="sec-form" style="display:none;">
+  <div class="form-eye">Formulaire de mise en relation</div>
+  <h2 class="form-tit">Je fais le <em>premier pas</em></h2>
+  <p class="form-sous">Remplissez ce formulaire en 4 étapes. Je vous répondrai sous 48h.</p>
+  <div class="steps-bar">
+    <div class="sdot on" id="sd1"></div><div class="sdot" id="sd2"></div><div class="sdot" id="sd3"></div><div class="sdot" id="sd4"></div>
+  </div>
+  <div class="fcard">
+    <div id="s1">
+      <div class="fc-tit">Qui êtes-vous ?</div>
+      <div class="fc-sub">Étape 1 sur 4 · Vos informations restent confidentielles.</div>
+      <div class="field-row">
+        <div class="field"><label>Prénom *</label><input type="text" id="f-prenom" placeholder="Votre prénom"></div>
+        <div class="field"><label>Nom *</label><input type="text" id="f-nom" placeholder="Votre nom"></div>
+      </div>
+      <div class="field"><label>Pseudo *</label><input type="text" id="f-pseudo" placeholder="Ex. Étoile56, Jean-P, Marinette..."></div>
+      <div class="field"><label>Email *</label><input type="email" id="f-email" placeholder="Votre adresse email"></div>
+      <div class="field"><label>Téléphone</label><input type="tel" id="f-tel" placeholder="06 xx xx xx xx"></div>
+      <div class="field-row">
+        <div class="field"><label>Âge *</label><input type="number" id="f-age" placeholder="Votre âge" min="18" max="99"></div>
+        <div class="field"><label>Ville *</label><input type="text" id="f-ville" placeholder="Votre ville"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Je suis *</label>
+          <select id="f-genre"><option value="">Sélectionner</option><option>Un homme</option><option>Une femme</option><option>Autre</option></select>
+        </div>
+        <div class="field"><label>Je cherche *</label>
+          <select id="f-cherche"><option value="">Sélectionner</option><option>Une femme</option><option>Un homme</option><option>Ouvert(e) à tout</option></select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Situation</label>
+          <select id="f-situation"><option value="">Sélectionner</option><option>Célibataire</option><option>Divorcé(e)</option><option>Séparé(e)</option><option>Veuf / Veuve</option><option>Je préfère ne pas préciser</option></select>
+        </div>
+        <div class="field"><label>Enfants</label>
+          <select id="f-enfants"><option value="">Sélectionner</option><option>Pas d'enfants</option><option>Enfant(s) à charge</option><option>Enfant(s) majeur(s)</option><option>Je préfère ne pas préciser</option></select>
+        </div>
+      </div>
+      <div class="field"><label>Le profil qui vous intéresse *</label>
+        <div class="profil-grid" style="margin-top:6px;">
+          <label class="popt" id="po-peg"><input type="radio" name="profil" value="Pegase"><div class="popt-ph">♂</div><div><div class="popt-nom">Pegase</div><div class="popt-det">51 ans · Finistère</div></div></label>
+          <label class="popt" id="po-piv"><input type="radio" name="profil" value="Pivoine"><div class="popt-ph">♀</div><div><div class="popt-nom">Pivoine</div><div class="popt-det">66 ans · Morbihan</div></div></label>
+          <label class="popt" id="po-dav"><input type="radio" name="profil" value="David G."><div class="popt-ph">♂</div><div><div class="popt-nom">David G.</div><div class="popt-det">53 ans · Morbihan</div></div></label>
+        </div>
+      </div>
+      <div class="ferr" id="e1">Veuillez remplir tous les champs obligatoires et choisir un profil.</div>
+      <div class="btn-row"><button class="btn-next" id="btn-s1s2">Continuer → Votre annonce</button></div>
+    </div>
+
+    <div id="s2" style="display:none;">
+      <div class="fc-tit">Votre présence à l'autre</div>
+      <div class="fc-sub">Étape 2 sur 4 · Pas un CV. Cinq fenêtres ouvertes sur qui vous êtes vraiment.</div>
+      <div class="field"><label>Titre de votre annonce *</label><input type="text" id="f-titre" placeholder="Une phrase qui donne envie d'en savoir plus..."></div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--G);margin-bottom:12px;">👇 Dépliez chaque rubrique et complétez-la. Les 5 rubriques sont obligatoires.</div>
+        <div class="acc-list">
+          <div class="acc-item open" id="acc1">
+            <div class="acc-header" data-acc="acc1"><span class="acc-num">①</span><span class="acc-titre">Qui je suis</span><span class="acc-arrow">▾</span></div>
+            <div class="acc-body"><div class="tab-quote">Pas votre bio LinkedIn. Ce que vos proches diraient de vous à quelqu'un qui ne vous connaît pas encore.</div><textarea id="ta1" rows="4" class="tab-ta" maxlength="500" placeholder="Qui je suis vraiment..."></textarea><div class="char-count"><span id="cc1">0</span> / 500</div></div>
+          </div>
+          <div class="acc-item" id="acc2">
+            <div class="acc-header" data-acc="acc2"><span class="acc-num">②</span><span class="acc-titre">Mon quotidien</span><span class="acc-arrow">▾</span></div>
+            <div class="acc-body"><div class="tab-quote">Une journée avec vous, ce qui vous anime, vous recharge, ce que vous ne rateriez pour rien au monde.</div><textarea id="ta2" rows="4" class="tab-ta" maxlength="500" placeholder="Mon quotidien..."></textarea><div class="char-count"><span id="cc2">0</span> / 500</div></div>
+          </div>
+          <div class="acc-item" id="acc3">
+            <div class="acc-header" data-acc="acc3"><span class="acc-num">③</span><span class="acc-titre">Ce que je cherche</span><span class="acc-arrow">▾</span></div>
+            <div class="acc-body"><div class="tab-quote">Pas un cahier des charges. Ce que vous espérez ressentir, vivre, construire ensemble.</div><textarea id="ta3" rows="4" class="tab-ta" maxlength="500" placeholder="Ce que je cherche..."></textarea><div class="char-count"><span id="cc3">0</span> / 500</div></div>
+          </div>
+          <div class="acc-item" id="acc4">
+            <div class="acc-header" data-acc="acc4"><span class="acc-num">④</span><span class="acc-titre">Ce que j'apporte</span><span class="acc-arrow">▾</span></div>
+            <div class="acc-body"><div class="tab-quote">Votre façon d'aimer, de prendre soin, d'être présent(e). Ce que vous donnez dans une relation.</div><textarea id="ta4" rows="4" class="tab-ta" maxlength="500" placeholder="Ce que j'apporte..."></textarea><div class="char-count"><span id="cc4">0</span> / 500</div></div>
+          </div>
+          <div class="acc-item" id="acc5">
+            <div class="acc-header" data-acc="acc5"><span class="acc-num">⑤</span><span class="acc-titre">Mon petit truc</span><span class="acc-arrow">▾</span></div>
+            <div class="acc-body"><div class="tab-quote">Quelque chose d'inattendu, d'attachant, de singulier, ce petit truc qui vous rend unique.</div><textarea id="ta5" rows="4" class="tab-ta" maxlength="500" placeholder="Mon petit truc..."></textarea><div class="char-count"><span id="cc5">0</span> / 500</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="tags-section">
+        <span class="tags-label">Mes 3 mots-clés sur moi</span>
+        <div class="tags-wrap" id="mots-moi"></div>
+        <div class="tag-add-row"><input type="text" id="mm-in" placeholder="Un mot..." maxlength="20"><button class="tag-add-btn" id="mm-btn">+ Ajouter</button></div>
+      </div>
+      <div class="tags-section">
+        <span class="tags-label">Mes 3 mots-clés sur l'Amour</span>
+        <div class="tags-wrap" id="mots-amour"></div>
+        <div class="tag-add-row"><input type="text" id="ma-in" placeholder="Un mot..." maxlength="20"><button class="tag-add-btn" id="ma-btn">+ Ajouter</button></div>
+      </div>
+      <div class="tags-section">
+        <span class="tags-label">Mes passions &amp; loisirs · Cliquez pour sélectionner</span>
+        <div class="tags-wrap" id="passions-wrap">
+          <span class="tag">🌊 Mer &amp; voile</span><span class="tag">🚴 Vélo</span><span class="tag">🥾 Randonnée</span><span class="tag">🍽️ Gastronomie</span><span class="tag">🎭 Théâtre &amp; spectacles</span><span class="tag">📚 Lecture</span><span class="tag">🎵 Musique</span><span class="tag">✈️ Voyage</span><span class="tag">🎨 Arts créatifs</span><span class="tag">🌿 Nature &amp; jardinage</span><span class="tag">🐾 Animaux</span><span class="tag">🏃 Running &amp; sport</span><span class="tag">🎬 Cinéma</span><span class="tag">👨‍🍳 Cuisine</span><span class="tag">🌺 Yoga &amp; méditation</span><span class="tag">🏄 Surf &amp; sports nautiques</span><span class="tag">⛵ Plaisance</span><span class="tag">🎸 Concerts</span><span class="tag">📷 Photo</span><span class="tag">🍷 Vins &amp; dégustation</span><span class="tag">🧘 Bien-être</span><span class="tag">🌍 Écologie</span><span class="tag">🏕️ Camping &amp; plein air</span><span class="tag">♟️ Jeux de société</span><span class="tag">🎭 Humour &amp; impro</span><span class="tag">🏊 Natation</span><span class="tag">🧗 Escalade</span><span class="tag">🎻 Musique classique</span><span class="tag">✍️ Écriture</span><span class="tag">🌙 Astronomie</span>
+        </div>
+        <div class="tag-add-row" style="margin-top:6px;"><input type="text" id="pa-in" placeholder="Autre passion..."><button class="tag-add-btn" id="pa-btn">+ Ajouter</button></div>
+      </div>
+      <div class="field" style="margin-top:4px;"><label>Pourquoi ce profil vous a touché ? (facultatif)</label><textarea id="f-pourquoi" rows="3" class="tab-ta" placeholder="Ce qui vous a attiré, ce qui vous a parlé..."></textarea></div>
+      <div class="ferr" id="e2">Veuillez remplir le titre et les 5 onglets.</div>
+      <div class="btn-row"><button class="btn-back" id="btn-s2s1">← Retour</button><button class="btn-next" id="btn-s2s3">Continuer → Photos</button></div>
+    </div>
+
+    <div id="s3" style="display:none;">
+      <div class="fc-tit">Vos photos</div>
+      <div class="fc-sub">Étape 3 sur 4 · Jusqu'à 3 photos. Optionnel.</div>
+      <div class="photos-hint">✅ Portrait soigné, récent, seul(e), bonne lumière. ❌ Refusé : groupe, enfants, cigarette, alcool, jogging, torse nu, selfie en voiture ou WC.</div>
+      <div class="photos-grid">
+        <div class="pslot" id="ps1"><input type="file" id="pf1" accept="image/*"><img class="pslot-prev" id="pp1" src="" alt=""><button class="pslot-rm" id="pr1">✕</button><div class="pslot-num">1</div><div class="pslot-lbl">Photo</div></div>
+        <div class="pslot" id="ps2"><input type="file" id="pf2" accept="image/*"><img class="pslot-prev" id="pp2" src="" alt=""><button class="pslot-rm" id="pr2">✕</button><div class="pslot-num">2</div><div class="pslot-lbl">Photo</div></div>
+        <div class="pslot" id="ps3"><input type="file" id="pf3" accept="image/*"><img class="pslot-prev" id="pp3" src="" alt=""><button class="pslot-rm" id="pr3">✕</button><div class="pslot-num">3</div><div class="pslot-lbl">Photo</div></div>
+      </div>
+      <div class="photos-opts">
+        <label class="photo-opt"><input type="radio" name="photo-vis" value="visibles" checked> 🟡 Visibles directement</label>
+        <label class="photo-opt"><input type="radio" name="photo-vis" value="aucune"> 🚫 Je ne souhaite pas mettre de photo</label>
+      </div>
+      <div class="btn-row" style="margin-top:20px;"><button class="btn-back" id="btn-s3s2">← Retour</button><button class="btn-next" id="btn-s3s4">Continuer → Récapitulatif</button></div>
+    </div>
+
+    <div id="s4" style="display:none;">
+      <div class="fc-tit">Tout est prêt.</div>
+      <div class="fc-sub">Étape 4 sur 4 · Vérifiez avant d'envoyer.</div>
+      <div class="recap-bl"><div class="recap-lbl">Vous</div><div class="recap-val" id="rc-id"></div></div>
+      <div class="recap-bl"><div class="recap-lbl">Profil souhaité</div><div class="recap-val" id="rc-profil"></div></div>
+      <div class="recap-bl"><div class="recap-lbl">Titre de l'annonce</div><div class="recap-val" id="rc-titre"></div></div>
+      <div class="recap-bl"><div class="recap-lbl">Passions</div><div class="recap-val" id="rc-passions"></div></div>
+      <div class="ferr" id="e4">Une erreur est survenue. Écrivez sur WhatsApp.</div>
+      <div class="btn-row"><button class="btn-back" id="btn-s4s3">← Retour</button><button class="btn-next" id="btn-envoyer">💌 Envoyer ma demande</button></div>
+    </div>
+
+    <div id="s-ok" style="display:none;text-align:center;padding:20px 0;">
+      <div style="font-size:3rem;margin-bottom:14px;">💌</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--N);margin-bottom:8px;">Demande envoyée !</div>
+      <div style="font-size:.82rem;color:var(--G);line-height:1.7;">Je vous contacte sous 48h.<br>Le règlement de 13 € se fait ci-dessous, après validation.</div>
+    </div>
+  </div>
+</section>
+
+<section class="pay-section" id="sec-pay" style="display:none;">
+  <div class="pay-eye">Règlement · 13 €</div>
+  <h2 class="pay-tit">Vous réglez 13 € la <em>mise en relation</em></h2>
+  <p class="pay-sous">Merci d'avoir rempli le formulaire. Choisissez votre mode de paiement pour finaliser.</p>
+  <div class="pay-card">
+    <div class="pay-card-tit" id="pay-profil-tit">Mise en relation · 13 €</div>
+    <div class="pay-opts" id="pay-opts-list"></div>
+  </div>
+  <p style="text-align:center;font-size:.72rem;color:rgba(255,255,255,.35);margin-top:16px;">Des questions ? <a href="https://wa.me/33633054456" target="_blank" style="color:var(--T);">WhatsApp</a> · <a href="mailto:lilikarantez@gmail.com" style="color:var(--T);">lilikarantez@gmail.com</a></p>
+</section>
+
+<footer class="footer">
+  <strong>Lili Karantez</strong> · Les Cœurs Solitaires<br>
+  Centre des Affaires Lorient La Base · 1 rue Étienne d'Orves · 56100 Lorient<br>
+  SIRET : 40149331700069 · <a href="mailto:lilikarantez@gmail.com">lilikarantez@gmail.com</a> · <a href="https://wa.me/33633054456">06 33 05 44 56</a><br>
+  © 2026 · Toute reproduction interdite
+</footer>
+</div>
+
+<script>
+var YURPLAN = {
+  'Pegase':   'https://yp.events/3f1aa0c3-2a14-4b71-a913-9c43dbdb2ebd/Mise-en-Relation-avec-PEGASE/ticketing?from=1',
+  'Pivoine':  'https://yp.events/e2a2e1eb-e706-4bc0-b0ce-aa8bc0cb24fd/Mise-en-Relation-avec-PIVOINE/ticketing?from=1',
+  'David G.': 'https://yp.events/b31bb691-3c34-4b20-88cc-0079f3aac80c/Mise-en-Relation-avec-DAVID-G?from=1'
+};
+
+document.getElementById('btn-garde').addEventListener('click', function() {
+  var g = document.getElementById('garde');
+  g.classList.add('out');
+  setTimeout(function(){ g.style.display='none'; document.getElementById('contenu').classList.add('visible'); }, 950);
+});
+
+document.querySelectorAll('.eng-header').forEach(function(hdr) {
+  hdr.addEventListener('click', function() {
+    document.getElementById(this.getAttribute('data-target')).classList.toggle('open');
+  });
+});
+
+['chk1','chk2','chk3','chk4'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', majCTA);
+});
+
+document.querySelectorAll('.eng-check').forEach(function(zone) {
+  zone.addEventListener('click', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'LABEL') return;
+    var cb = this.querySelector('input[type=checkbox]');
+    cb.checked = !cb.checked;
+    majCTA();
+  });
+});
+
+function majCTA() {
+  var ok = ['chk1','chk2','chk3','chk4'].every(function(id){ return document.getElementById(id).checked; });
+  document.getElementById('eng-cta-btn').classList.toggle('ready', ok);
+}
+
+document.getElementById('eng-cta-btn').addEventListener('click', function() {
+  var ok = ['chk1','chk2','chk3','chk4'].every(function(id){ return document.getElementById(id).checked; });
+  if (!ok) { document.getElementById('eng-err').style.display='block'; return; }
+  document.getElementById('eng-err').style.display='none';
+  var sec = document.getElementById('sec-form');
+  sec.style.display='block';
+  setTimeout(function(){ sec.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+});
+
+function setDots(n) {
+  for (var i=1;i<=4;i++) { var d=document.getElementById('sd'+i); if(d) d.classList.toggle('on',i===n); }
+}
+function showStep(n) {
+  for (var i=1;i<=4;i++) { var s=document.getElementById('s'+i); if(s) s.style.display='none'; }
+  document.getElementById('s'+n).style.display='block';
+  setDots(n);
+  document.getElementById('sec-form').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+document.getElementById('btn-s1s2').addEventListener('click', function() {
+  var ok = ['f-prenom','f-nom','f-pseudo','f-email','f-age','f-ville'].every(function(id){ return document.getElementById(id).value.trim()!==''; });
+  var genre = document.getElementById('f-genre').value;
+  var cherche = document.getElementById('f-cherche').value;
+  var profil = document.querySelector('input[name=profil]:checked');
+  if (!ok||!genre||!cherche||!profil) { document.getElementById('e1').style.display='block'; return; }
+  document.getElementById('e1').style.display='none';
+  showStep(2);
+});
+document.getElementById('btn-s2s1').addEventListener('click', function(){ showStep(1); });
+document.getElementById('btn-s2s3').addEventListener('click', function() {
+  var titre = document.getElementById('f-titre').value.trim();
+  var tabs = ['ta1','ta2','ta3','ta4','ta5'].every(function(id){ return document.getElementById(id).value.trim()!==''; });
+  if (!titre||!tabs) { document.getElementById('e2').style.display='block'; return; }
+  document.getElementById('e2').style.display='none';
+  showStep(3);
+});
+document.getElementById('btn-s3s2').addEventListener('click', function(){ showStep(2); });
+document.getElementById('btn-s3s4').addEventListener('click', function() {
+  var prenom = document.getElementById('f-prenom').value.trim();
+  var nom = document.getElementById('f-nom').value.trim();
+  var age = document.getElementById('f-age').value.trim();
+  var ville = document.getElementById('f-ville').value.trim();
+  var genre = document.getElementById('f-genre').value;
+  var profil = document.querySelector('input[name=profil]:checked').value;
+  var passions = [];
+  document.querySelectorAll('#passions-wrap .tag.on').forEach(function(t){ passions.push(t.textContent.trim()); });
+  document.getElementById('rc-id').textContent = prenom+' '+nom+' · '+age+' ans · '+ville+' · '+genre;
+  document.getElementById('rc-profil').textContent = profil;
+  document.getElementById('rc-titre').textContent = document.getElementById('f-titre').value.trim();
+  document.getElementById('rc-passions').textContent = passions.length ? passions.join(', ') : 'Aucune sélectionnée';
+  showStep(4);
+});
+document.getElementById('btn-s4s3').addEventListener('click', function(){ showStep(3); });
+
+// Accordéons annonce
+document.querySelectorAll('.acc-header').forEach(function(hdr) {
+  hdr.addEventListener('click', function() {
+    document.getElementById(this.getAttribute('data-acc')).classList.toggle('open');
+  });
+});
+
+['ta1','ta2','ta3','ta4','ta5'].forEach(function(id) {
+  var cc = document.getElementById('cc'+id.replace('ta',''));
+  if (cc) document.getElementById(id).addEventListener('input', function(){ cc.textContent = this.value.length; });
+});
+
+function addTag(inputId, wrapId, max) {
+  var inp = document.getElementById(inputId);
+  var val = inp.value.trim();
+  if (!val) return;
+  var wrap = document.getElementById(wrapId);
+  if (wrap.querySelectorAll('.tag').length >= max) { inp.value=''; return; }
+  var span = document.createElement('span');
+  span.className = 'tag on';
+  span.setAttribute('data-val', val);
+  span.textContent = val;
+  span.addEventListener('click', function(){ wrap.removeChild(span); });
+  wrap.appendChild(span);
+  inp.value = '';
+}
+document.getElementById('mm-btn').addEventListener('click', function(){ addTag('mm-in','mots-moi',3); });
+document.getElementById('mm-in').addEventListener('keydown', function(e){ if(e.key==='Enter'){e.preventDefault();addTag('mm-in','mots-moi',3);} });
+document.getElementById('ma-btn').addEventListener('click', function(){ addTag('ma-in','mots-amour',3); });
+document.getElementById('ma-in').addEventListener('keydown', function(e){ if(e.key==='Enter'){e.preventDefault();addTag('ma-in','mots-amour',3);} });
+
+document.querySelectorAll('#passions-wrap .tag').forEach(function(t){
+  t.addEventListener('click', function(){ this.classList.toggle('on'); });
+});
+document.getElementById('pa-btn').addEventListener('click', function() {
+  var inp = document.getElementById('pa-in');
+  var val = inp.value.trim(); if (!val) return;
+  var span = document.createElement('span');
+  span.className = 'tag on';
+  span.textContent = val;
+  span.addEventListener('click', function(){ this.classList.toggle('on'); });
+  document.getElementById('passions-wrap').appendChild(span);
+  inp.value = '';
+});
+
+document.querySelectorAll('.popt').forEach(function(opt){
+  opt.addEventListener('click', function(){
+    document.querySelectorAll('.popt').forEach(function(o){o.classList.remove('sel');});
+    this.classList.add('sel');
+  });
+});
+
+[1,2,3].forEach(function(n) {
+  document.getElementById('pf'+n).addEventListener('change', function(){
+    if (this.files&&this.files[0]) {
+      var slot = document.getElementById('ps'+n);
+      var prev = document.getElementById('pp'+n);
+      var r = new FileReader();
+      r.onload = function(e){ prev.src=e.target.result; slot.classList.add('filled'); };
+      r.readAsDataURL(this.files[0]);
+    }
+  });
+  document.getElementById('pr'+n).addEventListener('click', function(e){
+    e.stopPropagation();
+    document.getElementById('pp'+n).src='';
+    document.getElementById('ps'+n).classList.remove('filled');
+    document.getElementById('pf'+n).value='';
+  });
+});
+
+document.getElementById('btn-envoyer').addEventListener('click', async function() {
+  var prenom=document.getElementById('f-prenom').value.trim();
+  var nom=document.getElementById('f-nom').value.trim();
+  var pseudo=document.getElementById('f-pseudo').value.trim();
+  var email=document.getElementById('f-email').value.trim();
+  var tel=document.getElementById('f-tel').value.trim();
+  var age=document.getElementById('f-age').value.trim();
+  var ville=document.getElementById('f-ville').value.trim();
+  var genre=document.getElementById('f-genre').value;
+  var cherche=document.getElementById('f-cherche').value;
+  var situation=document.getElementById('f-situation').value;
+  var enfants=document.getElementById('f-enfants').value;
+  var profil=document.querySelector('input[name=profil]:checked').value;
+  var titre=document.getElementById('f-titre').value.trim();
+  var t1=document.getElementById('ta1').value.trim();
+  var t2=document.getElementById('ta2').value.trim();
+  var t3=document.getElementById('ta3').value.trim();
+  var t4=document.getElementById('ta4').value.trim();
+  var t5=document.getElementById('ta5').value.trim();
+  var pourquoi=document.getElementById('f-pourquoi').value.trim();
+  var passions=[];
+  document.querySelectorAll('#passions-wrap .tag.on').forEach(function(t){passions.push(t.textContent.trim());});
+  var motsMoi=[],motsAmour=[];
+  document.querySelectorAll('#mots-moi .tag').forEach(function(t){motsMoi.push(t.getAttribute('data-val'));});
+  document.querySelectorAll('#mots-amour .tag').forEach(function(t){motsAmour.push(t.getAttribute('data-val'));});
+  var photoVis=document.querySelector('input[name=photo-vis]:checked').value;
+  var msg='PROFIL SOUHAITE : '+profil+'\n\nIDENTITE\nPrenom : '+prenom+' - Nom : '+nom+' - Pseudo : '+pseudo+'\nAge : '+age+' ans - Ville : '+ville+' - '+genre+' cherche '+cherche+'\nSituation : '+(situation||'NR')+' - Enfants : '+(enfants||'NR')+'\nTel : '+(tel||'NR')+'\n\nTITRE : '+titre+'\n\nQUI JE SUIS :\n'+t1+'\n\nMON QUOTIDIEN :\n'+t2+'\n\nCE QUE JE CHERCHE :\n'+t3+'\n\nCE QUE J APPORTE :\n'+t4+'\n\nMON PETIT TRUC :\n'+t5+'\n\nMOTS-CLES MOI : '+motsMoi.join(', ')+'\nMOTS-CLES AMOUR : '+motsAmour.join(', ')+'\nPASSIONS : '+passions.join(', ')+'\n\nPHOTOS : '+photoVis+'\n\nPOURQUOI CE PROFIL : '+(pourquoi||'NR');
+  try {
+    var res=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_key:'d42b8d9d-a52c-4888-a489-5dd59b1b0f5b',subject:'Mise en relation 13 euros - '+pseudo+' / '+profil,from_name:prenom+' '+nom,email:email,message:msg})});
+    var data=await res.json();
+    if (data.success) {
+      document.getElementById('s4').style.display='none';
+      document.getElementById('s-ok').style.display='block';
+      afficherPaiement(profil);
+    } else { document.getElementById('e4').style.display='block'; }
+  } catch(e){ document.getElementById('e4').style.display='block'; }
+});
+
+function afficherPaiement(profil) {
+  var sec=document.getElementById('sec-pay');
+  sec.style.display='block';
+  document.getElementById('pay-profil-tit').textContent='Vous réglez 13 € la mise en relation avec '+profil;
+  var yurl=YURPLAN[profil]||'https://paypal.me/lilikarantez';
+  document.getElementById('pay-opts-list').innerHTML='<a href="'+yurl+'" target="_blank" class="pay-opt"><div class="pay-opt-ico">💝</div><div><div class="pay-opt-nom">Yurplan · '+profil+'</div><div class="pay-opt-det">Paiement sécurisé en ligne · 13 €</div></div></a><a href="https://paypal.me/lilikarantez" target="_blank" class="pay-opt"><div class="pay-opt-ico">🅿</div><div><div class="pay-opt-nom">PayPal</div><div class="pay-opt-det">paypal.me/lilikarantez · 13 €</div></div></a>';
+  setTimeout(function(){ sec.scrollIntoView({behavior:'smooth',block:'start'}); },300);
+}
+</script>
+</body>
+</html>
